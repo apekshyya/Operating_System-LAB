@@ -33,21 +33,26 @@ int main() {
     
     // Sort by burst time (Shortest Job First)
     qsort(p, n, sizeof(Process), compare);
+    
     // Calculate waiting time and turnaround time
     p[0].wt = 0;
     for (i = 1; i < n; i++) {
         p[i].wt = p[i - 1].wt + p[i - 1].bt;
     }
+    
     printf("\n%-10s%-15s%-15s%-15s\n", "Process", "Burst Time", "Waiting Time", "Turnaround Time");
     printf("-------------------------------------------------------\n");
+    
     for (i = 0; i < n; i++) {
         p[i].tat = p[i].wt + p[i].bt;
         total_wt += p[i].wt;
         total_tat += p[i].tat;
         printf("P%-9d%-15d%-15d%-15d\n", p[i].pid, p[i].bt, p[i].wt, p[i].tat);
     }
+    
     printf("\nAverage Waiting Time = %.2f\n", (float)total_wt / n);
     printf("Average Turnaround Time = %.2f\n", (float)total_tat / n);
+    
     // Gantt Chart
     printf("\nGantt Chart:\n");
     printf("|");
@@ -55,10 +60,12 @@ int main() {
         printf(" P%d |", p[i].pid);
     }
     printf("\n");
+    
     printf("0");
     for (i = 0; i < n; i++) {
         printf("     %d", p[i].wt + p[i].bt);
     }
     printf("\n");
+    
     return 0;
 }
